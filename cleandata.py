@@ -4,6 +4,8 @@ import fuzzywuzzy
 from fuzzywuzzy import process
 import charset_normalizer
 
+
+# -------------------------------limpiar medicinas-----------------------------------------
 depression_study = pd.read_csv("datasets/depression_study.1000copy.csv",encoding='utf-8')
 np.random.seed(0)
 
@@ -43,8 +45,10 @@ replace_matches_in_column(df=depression_study, column='medication', string_to_ma
 replace_matches_in_column(df=depression_study, column='medication', string_to_match="celexa",min_ratio=66)
 
 medicinas = depression_study['medication'].unique()
-print(medicinas)
+#print(medicinas)
 
+# -------------------------------limpiar posiciones-----------------------------------------s
 
-
-
+posiciones = depression_study['pos'].unique()
+posiciones.sort()
+print(posiciones)
