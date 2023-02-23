@@ -6,7 +6,7 @@ import charset_normalizer
 
 
 # -------------------------------limpiar medicinas-----------------------------------------
-depression_study = pd.read_csv("datasets/depression_study.1000copy.csv",encoding='utf-8')
+depression_study = pd.read_csv("datasets/depression_study.10000copy.csv",encoding='utf-8')
 np.random.seed(0)
 
 medicinas = depression_study['medication'].unique()
@@ -42,5 +42,17 @@ replace_matches_in_column(df=depression_study, column='medication', string_to_ma
 replace_matches_in_column(df=depression_study, column='medication', string_to_match="celexa",min_ratio=50)
 replace_matches_in_column(df=depression_study, column='medication', string_to_match="prozac",min_ratio=46)
 
+
+replace_matches_in_column(df=depression_study, column='medication', string_to_match="cymbalta",min_ratio=46)
+replace_matches_in_column(df=depression_study, column='medication', string_to_match="remeron",min_ratio=46)
+replace_matches_in_column(df=depression_study, column='medication', string_to_match="paxil",min_ratio=44)
+replace_matches_in_column(df=depression_study, column='medication', string_to_match="zoloft",min_ratio=30)
+
+
 medicinas = depression_study['medication'].unique()
+
+
+matches = fuzzywuzzy.process.extract("prozac", medicinas, limit=20, scorer=fuzzywuzzy.fuzz.token_sort_ratio)
+#print(matches)
+
 print(medicinas)
