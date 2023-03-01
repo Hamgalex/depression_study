@@ -15,8 +15,14 @@ tabla_mutaciones_baseline = pd.DataFrame(columns=['mutacion','promedio_baseline'
 
 for mutacion in lista_mutaciones:
     filtro_por_mutacion=mutaciones[mutaciones["mutacion"]==mutacion]
+    if mutacion== '435883AG':
+        print(filtro_por_mutacion)
+
+    
     promedio=filtro_por_mutacion['baseline_hamd'].mean()
+
     valueDict = {'mutacion': mutacion, 'promedio_baseline': promedio}
     tabla_mutaciones_baseline = tabla_mutaciones_baseline.append(valueDict,ignore_index=True)
 
-print(tabla_mutaciones_baseline)
+#print(tabla_mutaciones_baseline)
+tabla_mutaciones_baseline.to_csv('output.csv')
