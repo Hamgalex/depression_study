@@ -10,4 +10,13 @@ mutaciones['mutacion'] = mutaciones['chromosome'].astype(int).map(str) + mutacio
 
 lista_mutaciones=mutaciones.mutacion.unique() #99641, 9933
 lista_mutaciones.sort()
-print(lista_mutaciones)
+
+tabla_mutaciones_baseline = pd.DataFrame(columns=['mutacion','promedio_baseline'])
+
+for mutacion in lista_mutaciones:
+    filtro_por_mutacion=mutaciones[mutaciones["mutacion"]==mutacion]
+    promedio=filtro_por_mutacion['baseline_hamd'].mean()
+    valueDict = {'mutacion': mutacion, 'promedio_baseline': promedio}
+    tabla_mutaciones_baseline = tabla_mutaciones_baseline.append(valueDict,ignore_index=True)
+
+print(tabla_mutaciones_baseline)
