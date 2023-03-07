@@ -11,11 +11,36 @@ columnas+=["d1","hamd1","d2","hamd2","d3","hamd3","d4","hamd4","d5","hamd5","d6"
 #print(columnas)
 
 df = pd.DataFrame(columns=columnas)
+xd=True
 
-for i in range (100000,109999+1):
+for i in range (100000,100010):
     paciente=depression_study[depression_study['id']==i]
     mutacionespaciente=paciente[~paciente["chromosome"].isna()]
-    
-    for index,row in mutacionespaciente.iterrows():
+    medicinas=paciente[~paciente["medication"].isna()]
+
+    medicinasdelpaciente=[]
+
+    baseline_hamd=0
+    id_paciente=1
+
+    for index,row in medicinas.iterrows():
+        hamd=row.hamd
+        medication=row.medication
+        medicinasdelpaciente+=[medication,hamd]
         baseline_hamd=row.baseline_hamd
-    
+        id_paciente=row.id
+
+    arr0 = [0] * 40
+    fila=[id_paciente,baseline_hamd] 
+
+    dictionary = dict(zip(mutaciones, arr0))
+
+    for index,row in mutacionespaciente.iterrows():
+        dictionary[str(int(row.pos))]=1
+
+    fila+=dictionary.values()
+    fila+=medicinasdelpaciente
+    print(fila)
+
+    df=df.append(pd.Series(fila),ignore_index=True)
+df.to_csv("output.csv")
