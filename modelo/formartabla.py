@@ -14,33 +14,37 @@ df = pd.DataFrame(columns=columnas)
 xd=True
 
 for i in range (100000,100010):
+    
     paciente=depression_study[depression_study['id']==i]
     mutacionespaciente=paciente[~paciente["chromosome"].isna()]
-    medicinas=paciente[~paciente["medication"].isna()]
-
-    medicinasdelpaciente=[]
-
-    baseline_hamd=0
-    id_paciente=1
-
-    for index,row in medicinas.iterrows():
-        hamd=row.hamd
-        medication=row.medication
-        medicinasdelpaciente+=[medication,hamd]
-        baseline_hamd=row.baseline_hamd
-        id_paciente=row.id
+    medicinas=paciente[~paciente["date"].isna()]
 
     arr0 = [0] * 40
-    fila=[id_paciente,baseline_hamd] 
-
     dictionary = dict(zip(mutaciones, arr0))
+    
+    
+
+    x=1
+    for index,row in medicinas.iterrows():
+        
+        hamd=row.hamd
+        medication=row.medication
+    
+        dictionary["d"+str(x)]=medication
+        dictionary["hamd"+str(x)]=hamd
+        if(x==1):
+            dictionary["id_paciente"]=row.id
+            dictionary["baseline_hamd"]=row.baseline_hamd
+        x+=1
+
+
+
+    
 
     for index,row in mutacionespaciente.iterrows():
         dictionary[str(int(row.pos))]=1
 
-    fila+=dictionary.values()
-    fila+=medicinasdelpaciente
-    print(fila)
+    print(dictionary)
+    df = df.append(dictionary, ignore_index=True)
 
-    df=df.append(pd.Series(fila),ignore_index=True)
 df.to_csv("output.csv")
