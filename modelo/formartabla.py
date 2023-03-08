@@ -13,7 +13,7 @@ columnas+=["d1","hamd1","d2","hamd2","d3","hamd3","d4","hamd4","d5","hamd5","d6"
 df = pd.DataFrame(columns=columnas)
 xd=True
 
-for i in range (100000,100010):
+for i in range (100000,109999+1):
     
     paciente=depression_study[depression_study['id']==i]
     mutacionespaciente=paciente[~paciente["chromosome"].isna()]
@@ -29,20 +29,19 @@ for i in range (100000,100010):
         
         hamd=row.hamd
         medication=row.medication
-    
-        dictionary["d"+str(x)]=medication
-        dictionary["hamd"+str(x)]=hamd
+       
+        dictionary["d"+str(int(row.date))]=medication
+        dictionary["hamd"+str(int(row.date))]=hamd
         if(x==1):
             dictionary["id_paciente"]=row.id
             dictionary["baseline_hamd"]=row.baseline_hamd
         x+=1
 
-
-
     
-
+    
     for index,row in mutacionespaciente.iterrows():
         dictionary[str(int(row.pos))]=1
+        
 
     print(dictionary)
     df = df.append(dictionary, ignore_index=True)
