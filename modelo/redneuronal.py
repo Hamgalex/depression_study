@@ -35,7 +35,7 @@ model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_square
 
 
 # Fitting the ANN to the Training set
-model.fit(x_train, y_train ,batch_size = 20, epochs = 25, verbose=1)
+model.fit(x_train, y_train ,batch_size = 15, epochs = 10, verbose=1)
 
 MAPE = mean_absolute_percentage_error(y_test, model.predict(x_test))
 print("accuracy: "+str(100-MAPE))
